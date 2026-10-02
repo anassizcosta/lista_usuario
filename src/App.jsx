@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -26,6 +27,7 @@ const filtrarUsuarioPorTermo = (termo) => (usuario) => {
 
 
 function App() {
+
     const url = "https://jsonplaceholder.typicode.com";
 
     const [usuarios, setUsuarios] = useState([]);
@@ -46,127 +48,213 @@ function App() {
     );
 
 
+    // BUSCAR UM USUÁRIO
+
     async function buscarUsuario(id) {
+
         try {
-            const response = await axios.get(
+
+            const resposta = await axios.get(
                 `${url}/users/${id}`
             );
 
-            setUsuarioSelecionado(response.data);
+            setUsuarioSelecionado(resposta.data);
 
         } catch (error) {
-            console.log("Erro ao buscar usuário: ", error);
+
+            console.log(
+                "Erro ao buscar usuário:",
+                error
+            );
+
         }
+
     }
 
 
+    // BUSCAR TODOS OS USUÁRIOS
+
     async function buscarUsuarios() {
+
         try {
+
             setCarregando(true);
 
-            const response = await axios.get(
+            const resposta = await axios.get(
                 `${url}/users`
             );
 
-            setUsuarios(response.data);
+            setUsuarios(resposta.data);
 
         } catch (error) {
+
             console.log(
-                "Erro ao buscar usuários: ",
+                "Erro ao buscar usuários:",
                 error
             );
 
             setErro(
-                `Não foi possível carregar os usuários. Código: ${error.message}`
+                "Não foi possível carregar os usuários."
             );
 
             setUsuarios([]);
 
-        } finally {
-            setCarregando(false);
         }
+
+        setCarregando(false);
+
     }
 
+
+    // FECHAR DETALHES
 
     function limparDetalhesUsuario() {
+
         setUsuarioSelecionado(null);
+
     }
 
 
+    // CADASTRAR USUÁRIO
+
     async function cadastrarUsuario(usuario) {
+
         try {
-            const response = await axios.post(
+
+            const resposta = await axios.post(
                 `${url}/users`,
                 usuario
             );
 
-            const data = response.data;
 
-            setNovoUsuario(data);
+            const novoUsuario = {
+                ...resposta.data,
+                id: usuarios.length + 1
+            };
+
+
+            setNovoUsuario(novoUsuario);
+
 
             setUsuarios([
                 ...usuarios,
-                data
+                novoUsuario
             ]);
 
-            setMensagem("Usuário cadastrado com sucesso!");
+
+            setMensagem(
+                "Usuário cadastrado com sucesso!"
+            );
+
 
             setModalNovoUsuarioAberto(false);
 
+
+            // A mensagem desaparece depois de 3 segundos
+
+            setTimeout(() => {
+
+                setMensagem(null);
+
+            }, 3000);
+
+
         } catch (error) {
+
             console.log(
-                "Erro ao cadastrar usuário: ",
+                "Erro ao cadastrar usuário:",
                 error
             );
+
         }
+
     }
 
+
+    // ABRIR MODAL DE REMOVER
 
     function abrirRemoverUsuario(usuario) {
+
         setUsuarioRemover(usuario);
+
         setModalRemoverUsuarioAberto(true);
+
     }
 
 
+    // REMOVER USUÁRIO
+
     async function removerUsuario(id) {
+
         try {
+
             await axios.delete(
                 `${url}/users/${id}`
             );
 
-            setUsuarios(
-                usuarios.filter(
-                    (usuario) => usuario.id !== id
-                )
+
+            const usuariosAtualizados = usuarios.filter(
+                (usuario) => usuario.id !== id
             );
 
-            setMensagem("Usuário removido com sucesso!");
+
+            setUsuarios(usuariosAtualizados);
+
+
+            setMensagem(
+                "Usuário removido com sucesso!"
+            );
+
 
             setModalRemoverUsuarioAberto(false);
+
             setUsuarioRemover(null);
 
+
+            // A mensagem desaparece depois de 3 segundos
+
+            setTimeout(() => {
+
+                setMensagem(null);
+
+            }, 3000);
+
+
         } catch (error) {
+
             console.log(
-                "Erro ao remover usuário: ",
+                "Erro ao remover usuário:",
                 error
             );
+
         }
+
     }
 
+
+    // CANCELAR REMOÇÃO
 
     function cancelarRemocao() {
+
         setModalRemoverUsuarioAberto(false);
+
         setUsuarioRemover(null);
+
     }
 
 
+    // CARREGAR USUÁRIOS
+
     useEffect(() => {
+
         buscarUsuarios();
+
     }, []);
 
 
     return (
         <div className="app">
+
 
             <HeaderComponent
                 busca={busca}
