@@ -1,0 +1,792 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Cores de Fundo */
+  --bg-main: #0d0714;
+  --bg-card: #180d2b;
+  --bg-card-hover: #23123d;
+  --bg-input: #120921;
+
+  --border-color: #311852;
+  --border-hover: #d946ef;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #a78bfa;
+  --text-pink: #f472b6;
+
+  --grad-primary: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  --grad-pink: linear-gradient(135deg, #d946ef 0%, #f43f5e 100%);
+
+  --glow-purple: 0 0 20px rgba(168, 85, 247, 0.3);
+  --glow-pink: 0 0 22px rgba(236, 72, 153, 0.4);
+  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+
+  --radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+
+  background-image:
+    radial-gradient(circle at 15% 15%, rgba(168, 85, 247, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(236, 72, 153, 0.12) 0%, transparent 40%);
+  background-attachment: fixed;
+}
+
+
+/* APP */
+
+.app {
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+
+/* TÍTULO */
+
+.titulo {
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 32px;
+  background: linear-gradient(135deg, #ffffff 20%, #e879f9 60%, #f43f5e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.03em;
+}
+
+
+/* BOTÃO NOVO USUÁRIO */
+
+.botao-novo-usuario {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  float: right;
+  margin-bottom: 24px;
+  padding: 12px 24px;
+  background: var(--grad-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--glow-pink);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.botao-novo-usuario:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 30px rgba(236, 72, 153, 0.6);
+}
+
+.botao-novo-usuario:active {
+  transform: translateY(0);
+}
+
+
+/* CAMPO DE BUSCA */
+
+.campo-busca {
+  clear: both;
+  width: 100%;
+  padding: 16px 22px;
+  margin-bottom: 28px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-card);
+}
+
+.campo-busca::placeholder {
+  color: #715298;
+}
+
+.campo-busca:focus {
+  border-color: #d946ef;
+  box-shadow: 0 0 0 4px rgba(217, 70, 239, 0.2), var(--glow-purple);
+  background-color: var(--bg-card-hover);
+}
+
+
+/* INFORMAÇÕES */
+
+.informacao {
+  margin: 16px 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+
+/* CARREGANDO */
+
+.carregando {
+  text-align: center;
+  padding: 50px 0;
+  color: var(--text-pink);
+  font-size: 1.2rem;
+  font-weight: 600;
+  animation: pulseGlow 1.8s infinite alternate;
+}
+
+
+/* ERRO */
+
+.erro {
+  padding: 18px 24px;
+  margin: 20px 0;
+  border-radius: var(--radius);
+  background: rgba(244, 63, 94, 0.12);
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  color: #fda4af;
+  font-weight: 500;
+}
+
+
+/* SEM RESULTADOS */
+
+.sem-resultados {
+  margin-top: 40px;
+  padding: 48px 24px;
+  text-align: center;
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  background: rgba(24, 13, 43, 0.5);
+}
+
+
+/* LISTA DE USUÁRIOS */
+
+.lista-usuarios {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 24px;
+  padding: 0;
+  margin-top: 24px;
+  list-style: none;
+}
+
+
+/* CARD DO USUÁRIO */
+
+.card-usuario {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 26px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-usuario::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--grad-primary);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-usuario:hover {
+  transform: translateY(-6px);
+  border-color: rgba(217, 70, 239, 0.6);
+  background-color: var(--bg-card-hover);
+  box-shadow: 0 16px 35px -10px rgba(0, 0, 0, 0.7), var(--glow-purple);
+}
+
+.card-usuario:hover::before {
+  opacity: 1;
+}
+
+
+/* AVATAR */
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  margin-bottom: 18px;
+  border-radius: 16px;
+  background: var(--grad-primary);
+  color: #ffffff;
+  font-size: 1.35rem;
+  font-weight: 800;
+  box-shadow: var(--glow-pink);
+}
+
+
+/* NOME */
+
+.nome-usuario {
+  margin: 0 0 4px;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+
+/* USERNAME */
+
+.username {
+  margin: 0 0 12px;
+  color: var(--text-pink);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+
+/* EMAIL */
+
+.email {
+  margin: 0 0 20px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  word-break: break-all;
+}
+
+
+/* BOTÕES DOS CARDS */
+
+.card-usuario button {
+  margin-top: auto;
+  width: auto;
+  flex: 1;
+  padding: 11px 18px;
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(217, 70, 239, 0.35);
+  border-radius: 12px;
+  color: #f472b6;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* DEIXA OS DOIS BOTÕES LADO A LADO */
+
+.card-usuario {
+  gap: 10px;
+}
+
+.card-usuario button {
+  margin-top: 0;
+}
+
+
+/* BOTÃO VER DETALHES */
+
+.card-usuario button:first-of-type:hover {
+  background: var(--grad-pink);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: var(--glow-pink);
+  transform: translateY(-1px);
+}
+
+
+/* BOTÃO REMOVER */
+
+.card-usuario button:last-of-type {
+  background: rgba(244, 63, 94, 0.12);
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  color: #fda4af;
+}
+
+.card-usuario button:last-of-type:hover {
+  background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 0 22px rgba(244, 63, 94, 0.4);
+  transform: translateY(-1px);
+}
+
+
+/* MODAL */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(13, 7, 20, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 22px;
+  padding: 36px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), var(--glow-purple);
+  animation: modalSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* BOTÃO X DO MODAL */
+
+.modal-fechar {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-fechar:hover {
+  background: rgba(244, 63, 94, 0.2);
+  border-color: rgba(244, 63, 94, 0.5);
+  color: #ffffff;
+  transform: rotate(90deg);
+  box-shadow: 0 0 12px rgba(244, 63, 94, 0.4);
+}
+
+
+/* FORMULÁRIO */
+
+.formulario-usuario {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.formulario-usuario header p {
+  color: var(--text-pink);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.formulario-usuario header h2 {
+  color: var(--text-primary);
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.campo-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo-formulario label {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.campo-formulario input {
+  width: 100%;
+  padding: 14px 18px;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.campo-formulario input:focus {
+  border-color: #d946ef;
+  box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.25);
+}
+
+
+/* BOTÃO CADASTRAR */
+
+.botao-cadastrar {
+  margin-top: 10px;
+  padding: 16px;
+  background: var(--grad-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--glow-pink);
+  transition: all 0.25s ease;
+}
+
+.botao-cadastrar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(236, 72, 153, 0.6);
+}
+
+
+/* DETALHES DO USUÁRIO */
+
+.detalhes-usuario {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detalhes-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.detalhes-header .avatar-grande {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: var(--grad-primary);
+  color: #ffffff;
+  font-size: 1.6rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--glow-pink);
+}
+
+.detalhes-header h2 {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.detalhes-header p {
+  color: var(--text-pink);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+
+/* GRID DE DETALHES */
+
+.detalhes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.detalhes-item {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.detalhes-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-pink);
+  margin-bottom: 4px;
+}
+
+.detalhes-valor {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 500;
+  word-break: break-all;
+}
+
+
+/* BOTÃO FECHAR DETALHES */
+
+.botao-fechar-detalhes,
+.btn-fechar-detalhes {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.botao-fechar-detalhes:hover,
+.btn-fechar-detalhes:hover {
+  background: rgba(244, 63, 94, 0.18);
+  border-color: rgba(244, 63, 94, 0.45);
+  color: #fda4af;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(244, 63, 94, 0.25);
+}
+
+.botao-fechar-detalhes:active,
+.btn-fechar-detalhes:active {
+  transform: translateY(0);
+}
+
+
+/* REMOVER USUÁRIO */
+
+.remover-usuario {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.remover-usuario p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.remover-usuario strong {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+}
+
+.remover-usuario button {
+  width: 100%;
+  padding: 13px 18px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+
+/* BOTÃO REMOVER DO MODAL */
+
+.remover-usuario button:first-of-type {
+  background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%);
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 0 18px rgba(244, 63, 94, 0.25);
+}
+
+.remover-usuario button:first-of-type:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(244, 63, 94, 0.5);
+}
+
+
+/* BOTÃO CANCELAR */
+
+.remover-usuario button:last-of-type {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.remover-usuario button:last-of-type:hover {
+  background: rgba(168, 85, 247, 0.15);
+  border-color: #a855f7;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+
+/* MENSAGEM DE SUCESSO */
+
+.success-snackbar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(183, 12, 92, 0.9);
+  color: #ffffff;
+  padding: 14px 24px;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: var(--glow-purple);
+  z-index: 1100;
+  animation: snackbar-entrance 220ms ease-out both;
+}
+
+
+/* ANIMAÇÕES */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlide {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0% {
+    opacity: 0.6;
+  }
+
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 12px rgba(236, 72, 153, 0.6);
+  }
+}
+
+@keyframes snackbar-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* RESPONSIVO */
+
+@media (max-width: 640px) {
+
+  .app {
+    padding: 28px 16px;
+  }
+
+  .titulo {
+    font-size: 1.9rem;
+  }
+
+  .botao-novo-usuario {
+    width: 100%;
+    float: none;
+    margin-bottom: 20px;
+  }
+
+  .modal {
+    padding: 24px;
+  }
+
+  .lista-usuarios {
+    grid-template-columns: 1fr;
+  }
+
+  .card-usuario button {
+    font-size: 0.8rem;
+    padding: 10px 12px;
+  }
+}
+
+/* ÁREA DOS BOTÕES DE REMOVER */
+
+.botoes-remover {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+
+/* BOTÕES */
+
+.botoes-remover button {
+  flex: 1;
+  padding: 13px 18px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+
+/* REMOVER */
+
+.botao-confirmar-remocao {
+  background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%);
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 0 18px rgba(244, 63, 94, 0.25);
+}
+
+.botao-confirmar-remocao:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(244, 63, 94, 0.5);
+}
+
+
+/* CANCELAR */
+
+.botao-cancelar-remocao {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.botao-cancelar-remocao:hover {
+  background: rgba(168, 85, 247, 0.15);
+  border-color: #a855f7;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
